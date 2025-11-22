@@ -1,0 +1,5 @@
+{
+  "name": "FMassistant",
+  "description": "一个全面的个人财务管理系统，用于追踪基金、股票和现金。支持交易记录（买入、卖出、定投、赎回）、资产配置可视化以及基于 AI 的投资组合分析。",
+  "requestFramePermissions": []
+}
