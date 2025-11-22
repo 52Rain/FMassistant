@@ -3,11 +3,10 @@ name: Deploy Frontend to Pages
 
 on:
   push:
-    branches: ["main"]  # 监控 'main' 分支的推送事件
+    branches: ["main"]
 
-  workflow_dispatch: # 允许手动触发部署
+  workflow_dispatch:
 
-# 设置 GITHUB_TOKEN 的权限
 permissions:
   contents: read
   pages: write
@@ -20,33 +19,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 1. 设置 Node.js 环境
+      # 关键修改：移除 cache: 'npm'
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20  # 建议使用 LTS 版本
-          cache: 'npm'
+          node-version: 20
+          # 'cache' 参数已被移除
 
-      # 2. 安装项目依赖
       - name: Install dependencies
         run: npm install
 
-      # 3. 运行构建命令
       - name: Build project
-        run: npm run build # 确保您的 package.json 中有 build 脚本
+        run: npm run build
 
-      # 4. 配置 Pages 部署环境
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # 5. 上传构建后的文件
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 关键：指定构建输出的目录，通常是 'dist' 或 'build'
           path: './dist' 
 
-      # 6. 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
